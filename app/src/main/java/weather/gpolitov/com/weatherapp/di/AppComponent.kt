@@ -2,6 +2,7 @@ package weather.gpolitov.com.weatherapp.di
 
 import dagger.BindsInstance
 import dagger.Component
+import weather.gpolitov.com.weatherapp.App
 import javax.inject.Singleton
 
 @Singleton
@@ -18,6 +19,4 @@ interface AppComponent {
     }
 
     fun inject(app: App)
-
-    fun inject(appInterceptor: AppInterceptor)
 }

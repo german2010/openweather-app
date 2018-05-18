@@ -30,14 +30,10 @@ class NetworkModule {
     @Singleton
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-
     @Provides
     @Singleton
-    fun provideAppInterceptor(): AppInterceptor = AppInterceptor()
-
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor, appInterceptor: AppInterceptor): OkHttpClient = OkHttpClient.Builder().addInterceptor(appInterceptor).addInterceptor(httpLoggingInterceptor).build()
+    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor).build()
 
     @Provides
     @Singleton
@@ -49,5 +45,4 @@ class NetworkModule {
             .addConverterFactory(moshiConverterFactory)
             .addCallAdapterFactory(rxJava2CallAdapterFactory)
             .build()
-
 }

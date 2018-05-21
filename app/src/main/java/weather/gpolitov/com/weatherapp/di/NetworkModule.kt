@@ -1,5 +1,6 @@
 package weather.gpolitov.com.weatherapp.di
 
+import android.content.Context
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -9,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import weather.gpolitov.com.weatherapp.BuildConfig
+import weather.gpolitov.com.weatherapp.data.network.AppInterceptor
 import javax.inject.Singleton
 
 @Module
@@ -32,8 +34,15 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor).build()
+    fun provideAppInterceptor(context: Context): AppInterceptor {
+        return AppInterceptor(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor, appInterceptor: AppInterceptor): OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(appInterceptor).build()
 
     @Provides
     @Singleton

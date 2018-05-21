@@ -11,6 +11,7 @@ import weather.gpolitov.com.weatherapp.App
 import weather.gpolitov.com.weatherapp.data.DataRepository
 import weather.gpolitov.com.weatherapp.ui.main.MainActivity
 import weather.gpolitov.com.weatherapp.ui.main.MainModule
+import weather.gpolitov.com.weatherapp.utils.schedulers.BaseSchedulerProvider
 import weather.gpolitov.com.weatherapp.utils.schedulers.SchedulerProvider
 import javax.inject.Singleton
 
@@ -21,18 +22,16 @@ abstract class AppModule {
     @Binds
     abstract fun provideContext(app: App): Context
 
+    @Singleton
+    @Binds
+    abstract fun provideBaseShedulerProvider(schedulerProvider: SchedulerProvider): BaseSchedulerProvider
+
     @Module
     companion object {
         @Provides
         @Singleton
         fun dataRepository(retrofit: Retrofit): DataRepository {
             return DataRepository(retrofit)
-        }
-
-        @Provides
-        @Singleton
-        fun provideSchedulerProvider(): SchedulerProvider {
-            return SchedulerProvider()
         }
     }
 

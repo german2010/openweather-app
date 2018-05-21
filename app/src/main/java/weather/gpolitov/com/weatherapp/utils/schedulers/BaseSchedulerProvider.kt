@@ -2,7 +2,7 @@ package weather.gpolitov.com.weatherapp.utils.schedulers
 
 import io.reactivex.Scheduler
 
-interface BaseShedulerProvider {
+interface BaseSchedulerProvider {
 
     abstract fun computation(): Scheduler
 

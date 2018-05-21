@@ -3,7 +3,7 @@ package weather.gpolitov.com.weatherapp.utils.schedulers
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 
-class TrampolineShedulerProvider : BaseShedulerProvider {
+class TrampolineSchedulerProvider : BaseSchedulerProvider {
 
     override fun computation(): Scheduler {
         return Schedulers.trampoline()

@@ -3,7 +3,6 @@ package weather.gpolitov.com.weatherapp.model
 import com.squareup.moshi.Json
 
 data class WeatherResponse(
-        @Json(name = "cod") val cod: String,
         @Json(name = "list") val weatherList: List<WeatherList>
 )
 

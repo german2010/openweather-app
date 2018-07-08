@@ -1,5 +1,6 @@
 package weather.gpolitov.com.weatherapp.ui.main.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -7,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.*
 import weather.gpolitov.com.weatherapp.R
 import weather.gpolitov.com.weatherapp.model.WeatherResponse
 import weather.gpolitov.com.weatherapp.ui.adapter.WeatherAdapter
 import weather.gpolitov.com.weatherapp.ui.base.BaseFragment
+import weather.gpolitov.com.weatherapp.ui.main.MainActivity
 import javax.inject.Inject
 
 class MainFragment : BaseFragment(), MainFragmentContract.View {
@@ -44,9 +47,17 @@ class MainFragment : BaseFragment(), MainFragmentContract.View {
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
         recycler_view.adapter = adapter
 
-        search_button.setOnClickListener({
+        search_button.setOnClickListener {
             getWeather()
-        })
+        }
+
+        (activity as MainActivity).setToolbarTitle(getString(R.string.main_screen_title))
+    }
+
+    override fun onDestroyView() {
+        hideKeyboard()
+        presenter.dropView()
+        super.onDestroyView()
     }
 
     private fun setOnEditor() {
@@ -61,6 +72,7 @@ class MainFragment : BaseFragment(), MainFragmentContract.View {
     }
 
     private fun getWeather() {
+        hideKeyboard()
         val queryString = query_edit_text.text.toString().trim()
         if (!TextUtils.isEmpty(queryString)) {
             presenter.getRequestById(queryString)
@@ -93,5 +105,14 @@ class MainFragment : BaseFragment(), MainFragmentContract.View {
 
     override fun hideRecyclerView() {
         recycler_view.visibility = View.INVISIBLE
+    }
+
+    fun saveToLocalStorage() {
+        presenter.saveToLocalStorage()
+    }
+
+    private fun hideKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(query_edit_text.windowToken, 0)
     }
 }

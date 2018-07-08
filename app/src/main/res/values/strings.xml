@@ -5,4 +5,8 @@
     <string name="temperature_title">Temperature:</string>
     <string name="description_title">Description:</string>
     <string name="date_time_title">Date/Time:</string>
+    <string name="add_favorite">Add city to favorite</string>
+    <string name="show_favorites">Show favorite cities</string>
+    <string name="main_screen_title">Main screen</string>
+    <string name="favorite_screen">Favorite screen</string>
 </resources>

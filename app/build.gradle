@@ -65,4 +65,9 @@ dependencies {
     //Rx
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
+
+    //Room
+    implementation "android.arch.persistence.room:runtime:$archComponents"
+    implementation "android.arch.persistence.room:rxjava2:$archComponents"
+    kapt "android.arch.persistence.room:compiler:$archComponents"
 }

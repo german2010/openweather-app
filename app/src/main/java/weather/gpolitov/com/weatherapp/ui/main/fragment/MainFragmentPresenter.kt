@@ -6,6 +6,7 @@ import weather.gpolitov.com.weatherapp.BuildConfig
 import weather.gpolitov.com.weatherapp.WEATHER_UNIT_SYSTEM
 import weather.gpolitov.com.weatherapp.data.DataRepository
 import weather.gpolitov.com.weatherapp.di.FragmentScope
+import weather.gpolitov.com.weatherapp.model.Favorite
 import weather.gpolitov.com.weatherapp.model.WeatherResponse
 import weather.gpolitov.com.weatherapp.utils.schedulers.BaseSchedulerProvider
 import javax.inject.Inject
@@ -19,7 +20,12 @@ class MainFragmentPresenter @Inject internal constructor(private val dataReposit
 
     var compositeDisposable = CompositeDisposable()
 
+    lateinit var name: String
+    lateinit var temp: String
+
     override fun getRequestById(city: String) {
+        name = city.substring(0, 1).toUpperCase() + city.substring(1)
+
         view?.hideRecyclerView()
         compositeDisposable.add(dataRepository.getWeatherByCity(city, WEATHER_UNIT_SYSTEM, BuildConfig.appid)
                 .subscribeOn(schedulerProvider.io())
@@ -32,6 +38,7 @@ class MainFragmentPresenter @Inject internal constructor(private val dataReposit
         view?.hideProgressIndicator()
         view?.showRecyclerView()
         view?.showWeatherData(response)
+        temp = response.weatherList[0].main.temp.toString()
     }
 
     private fun handleError(throwable: Throwable) {
@@ -55,5 +62,11 @@ class MainFragmentPresenter @Inject internal constructor(private val dataReposit
     override fun dropView() {
         view = null
         compositeDisposable.clear()
+    }
+
+    override fun saveToLocalStorage() {
+        if (::name.isInitialized && ::temp.isInitialized) {
+            dataRepository.insertFavorite(Favorite(null, name, temp))
+        }
     }
 }

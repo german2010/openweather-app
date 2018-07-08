@@ -7,7 +7,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = arrayOf(AppModule::class,
-        NetworkModule::class))
+        NetworkModule::class, RepositoryModule::class))
 interface AppComponent {
 
     @Component.Builder

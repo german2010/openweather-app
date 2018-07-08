@@ -1,6 +1,5 @@
 package weather.gpolitov.com.weatherapp.ui.main.fragment
 
-import retrofit2.Response
 import weather.gpolitov.com.weatherapp.model.WeatherResponse
 
 interface MainFragmentContract {
@@ -9,6 +8,7 @@ interface MainFragmentContract {
         fun getRequestById(city: String)
         fun takeView(view: View)
         fun dropView()
+        fun saveToLocalStorage()
     }
 
     interface View {

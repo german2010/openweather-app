@@ -9,8 +9,14 @@ import weather.gpolitov.com.weatherapp.R
 import weather.gpolitov.com.weatherapp.ui.base.BaseActivity
 import weather.gpolitov.com.weatherapp.ui.main.favorite.FavoriteFragment
 import weather.gpolitov.com.weatherapp.ui.main.fragment.MainFragment
+import weather.gpolitov.com.weatherapp.utils.SyncUtil
+import javax.inject.Inject
 
 class MainActivity : BaseActivity(), FragmentManager.OnBackStackChangedListener {
+
+    @Inject
+    internal lateinit var syncUtil: SyncUtil
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,6 +30,13 @@ class MainActivity : BaseActivity(), FragmentManager.OnBackStackChangedListener 
         }
 
         supportFragmentManager.addOnBackStackChangedListener(this)
+
+        syncUtil.startSync()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        syncUtil.stopSync()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

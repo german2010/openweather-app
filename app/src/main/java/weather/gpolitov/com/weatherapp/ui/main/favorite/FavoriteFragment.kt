@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.*
 import weather.gpolitov.com.weatherapp.R
 import weather.gpolitov.com.weatherapp.model.Favorite
@@ -60,7 +61,19 @@ class FavoriteFragment : BaseFragment(), FavoriteFragmentContract.View {
         menu?.clear()
     }
 
-    override fun showFavorites(favorites: List<Favorite>) {
-        favoriteAdapter.updateList(favorites)
+    override fun showFavorites(favorites: List<Favorite>, hasConnected: Boolean) {
+        favoriteAdapter.updateList(favorites, hasConnected)
+    }
+
+    override fun showDBError() {
+        Toast.makeText(requireContext(), "Some error with DB", Toast.LENGTH_LONG).show()
+    }
+
+    override fun showProgressIndicator() {
+        progress_bar.visibility = View.VISIBLE
+    }
+
+    override fun hideProgressIndicator() {
+        progress_bar.visibility = View.GONE
     }
 }

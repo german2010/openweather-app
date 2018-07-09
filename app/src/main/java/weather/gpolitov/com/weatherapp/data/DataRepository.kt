@@ -16,11 +16,15 @@ open class DataRepository @Inject constructor(retrofit: Retrofit,
         return apiService.getWeatherByCity(city, units, appid)
     }
 
-    fun insertFavorite(favorite: Favorite) {
-        localDataSource.insertFavorite(favorite)
+    fun insertFavorite(vararg favorite: Favorite) {
+        localDataSource.insertFavorite(*favorite)
     }
 
-    fun getFavorites() : Single<List<Favorite>> {
+    fun getFavorites(): Single<List<Favorite>> {
         return localDataSource.getFavorites()
+    }
+
+    fun getCityList(): Single<List<String>> {
+        return localDataSource.getCityList()
     }
 }

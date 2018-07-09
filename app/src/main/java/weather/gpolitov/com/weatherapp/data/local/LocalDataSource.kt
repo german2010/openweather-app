@@ -10,11 +10,15 @@ class LocalDataSource @Inject constructor(db: AppDB) {
     private val dao: AppDAO = db.appDao()
 
 
-    fun insertFavorite(favorite: Favorite) {
-        dao.insertFavorite(favorite)
+    fun insertFavorite(vararg favorite: Favorite) {
+        dao.insertFavorite(*favorite)
     }
 
     fun getFavorites(): Single<List<Favorite>> {
         return dao.getFavorites()
+    }
+
+    fun getCityList(): Single<List<String>> {
+        return dao.getCityList()
     }
 }

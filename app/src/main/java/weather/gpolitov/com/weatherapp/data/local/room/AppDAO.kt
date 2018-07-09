@@ -11,8 +11,11 @@ import weather.gpolitov.com.weatherapp.model.Favorite
 interface AppDAO {
 
     @Insert(onConflict = REPLACE)
-    fun insertFavorite(favorite: Favorite)
+    fun insertFavorite(vararg favorite: Favorite)
 
     @Query("SELECT * FROM favorites")
     fun getFavorites(): Single<List<Favorite>>
+
+    @Query("SELECT name FROM favorites")
+    fun getCityList(): Single<List<String>>
 }

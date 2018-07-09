@@ -10,6 +10,9 @@ interface FavoriteFragmentContract {
     }
 
     interface View {
-        fun showFavorites(favorites: List<Favorite>)
+        fun showFavorites(favorites: List<Favorite>, hasConnected: Boolean)
+        fun showProgressIndicator()
+        fun hideProgressIndicator()
+        fun showDBError()
     }
 }

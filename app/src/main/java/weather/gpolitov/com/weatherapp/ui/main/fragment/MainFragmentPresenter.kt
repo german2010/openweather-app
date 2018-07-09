@@ -8,12 +8,14 @@ import weather.gpolitov.com.weatherapp.data.DataRepository
 import weather.gpolitov.com.weatherapp.di.FragmentScope
 import weather.gpolitov.com.weatherapp.model.Favorite
 import weather.gpolitov.com.weatherapp.model.WeatherResponse
+import weather.gpolitov.com.weatherapp.utils.Utils
 import weather.gpolitov.com.weatherapp.utils.schedulers.BaseSchedulerProvider
 import javax.inject.Inject
 
 @FragmentScope
 class MainFragmentPresenter @Inject internal constructor(private val dataRepository: DataRepository,
-                                                         private val schedulerProvider: BaseSchedulerProvider)
+                                                         private val schedulerProvider: BaseSchedulerProvider,
+                                                         private val utils: Utils)
     : MainFragmentContract.Presenter {
 
     var view: MainFragmentContract.View? = null
@@ -43,8 +45,8 @@ class MainFragmentPresenter @Inject internal constructor(private val dataReposit
 
     private fun handleError(throwable: Throwable) {
         view?.hideProgressIndicator()
-        when(throwable) {
-            is HttpException ->  {
+        when (throwable) {
+            is HttpException -> {
                 view?.showRecyclerView()
                 view?.showResponseError()
             }
@@ -66,7 +68,7 @@ class MainFragmentPresenter @Inject internal constructor(private val dataReposit
 
     override fun saveToLocalStorage() {
         if (::name.isInitialized && ::temp.isInitialized) {
-            dataRepository.insertFavorite(Favorite(null, name, temp))
+            dataRepository.insertFavorite(Favorite(null, name, temp, utils.getCurrentTime()))
         }
     }
 }

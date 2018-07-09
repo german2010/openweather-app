@@ -3,7 +3,8 @@ package weather.gpolitov.com.weatherapp.model
 import com.squareup.moshi.Json
 
 data class WeatherResponse(
-        @Json(name = "list") val weatherList: List<WeatherList>
+        @Json(name = "list") val weatherList: List<WeatherList>,
+        @Json(name = "city") val city: City
 )
 
 data class WeatherList(
@@ -18,4 +19,8 @@ data class Main(
 
 data class Weather(
         @Json(name = "description") val description: String
+)
+
+data class City(
+        @Json(name = "name") val name: String
 )

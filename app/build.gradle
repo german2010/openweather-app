@@ -70,4 +70,7 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$archComponents"
     implementation "android.arch.persistence.room:rxjava2:$archComponents"
     kapt "android.arch.persistence.room:compiler:$archComponents"
+
+    //DB view
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 }

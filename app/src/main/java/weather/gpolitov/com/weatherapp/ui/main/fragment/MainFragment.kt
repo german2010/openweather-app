@@ -92,11 +92,11 @@ class MainFragment : BaseFragment(), MainFragmentContract.View {
     }
 
     override fun showResponseError() {
-        Toast.makeText(requireContext(), "Some API error", Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), getString(R.string.api_error), Toast.LENGTH_LONG).show()
     }
 
     override fun showNetworkError() {
-        Toast.makeText(requireContext(), "Some network error", Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), getString(R.string.network_error), Toast.LENGTH_LONG).show()
     }
 
     override fun showRecyclerView() {

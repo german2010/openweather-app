@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.*
+import weather.gpolitov.com.weatherapp.CITY_NAME
 import weather.gpolitov.com.weatherapp.R
 import weather.gpolitov.com.weatherapp.model.Favorite
 import weather.gpolitov.com.weatherapp.ui.adapter.FavoriteAdapter
 import weather.gpolitov.com.weatherapp.ui.base.BaseFragment
 import weather.gpolitov.com.weatherapp.ui.main.MainActivity
+import weather.gpolitov.com.weatherapp.ui.main.details.DetailsFragment
 import javax.inject.Inject
 
 class FavoriteFragment : BaseFragment(), FavoriteFragmentContract.View {
@@ -44,12 +46,22 @@ class FavoriteFragment : BaseFragment(), FavoriteFragmentContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         presenter.takeView(this)
-        favoriteAdapter = FavoriteAdapter(requireContext())
+        favoriteAdapter = FavoriteAdapter { favorite: Favorite -> onFavoriteClicked(favorite) }
         recycler_view.layoutManager = LinearLayoutManager(requireContext())
         recycler_view.adapter = favoriteAdapter
         presenter.getFavorites()
 
         (activity as MainActivity).setToolbarTitle(getString(R.string.favorite_screen))
+    }
+
+    private fun onFavoriteClicked(favorite: Favorite) {
+        val bundle = Bundle()
+        bundle.putString(CITY_NAME, favorite.name)
+        (activity as MainActivity).supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.container_layout, DetailsFragment.newInstance(bundle), FavoriteFragment::class.java.toString())
+                .addToBackStack(null)
+                .commit()
     }
 
     override fun onDestroyView() {
@@ -66,7 +78,7 @@ class FavoriteFragment : BaseFragment(), FavoriteFragmentContract.View {
     }
 
     override fun showDBError() {
-        Toast.makeText(requireContext(), "Some error with DB", Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), getString(R.string.db_error), Toast.LENGTH_LONG).show()
     }
 
     override fun showProgressIndicator() {

@@ -10,7 +10,8 @@ import android.arch.persistence.room.PrimaryKey
 data class Favorite(@PrimaryKey(autoGenerate = true) var id: Long?,
                     @ColumnInfo(name = "name") var name: String,
                     @ColumnInfo(name = "temp") var temp: String,
+                    @ColumnInfo(name = "description") var description: String,
                     @ColumnInfo(name = "date") var date: String
 ) {
-    constructor() : this(null, "", "", "")
+    constructor() : this(null, "", "", "", "")
 }

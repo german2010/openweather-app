@@ -27,4 +27,8 @@ open class DataRepository @Inject constructor(retrofit: Retrofit,
     fun getCityList(): Single<List<String>> {
         return localDataSource.getCityList()
     }
+
+    fun getDetailedWeatherByCity(name: String) : Single<Favorite> {
+        return localDataSource.getDetailedWeatherByCity(name)
+    }
 }

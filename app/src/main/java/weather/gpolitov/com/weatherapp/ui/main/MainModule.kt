@@ -5,6 +5,8 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import weather.gpolitov.com.weatherapp.data.DataRepository
 import weather.gpolitov.com.weatherapp.di.FragmentScope
+import weather.gpolitov.com.weatherapp.ui.main.details.DetailsFragment
+import weather.gpolitov.com.weatherapp.ui.main.details.DetailsModule
 import weather.gpolitov.com.weatherapp.ui.main.favorite.FavoriteFragment
 import weather.gpolitov.com.weatherapp.ui.main.favorite.FavoriteFragmentModule
 import weather.gpolitov.com.weatherapp.ui.main.fragment.MainFragment
@@ -24,6 +26,10 @@ abstract class MainModule {
     @FragmentScope
     @ContributesAndroidInjector(modules = arrayOf(FavoriteFragmentModule::class))
     abstract fun favoriteFragmentInjector(): FavoriteFragment
+
+    @FragmentScope
+    @ContributesAndroidInjector(modules = arrayOf(DetailsModule::class))
+    abstract fun detailsFragmentInjector(): DetailsFragment
 
     @Module
     companion object {

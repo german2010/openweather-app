@@ -24,6 +24,7 @@ class MainFragmentPresenter @Inject internal constructor(private val dataReposit
 
     lateinit var name: String
     lateinit var temp: String
+    lateinit var description: String
 
     override fun getRequestById(city: String) {
         name = city.substring(0, 1).toUpperCase() + city.substring(1)
@@ -41,6 +42,7 @@ class MainFragmentPresenter @Inject internal constructor(private val dataReposit
         view?.showRecyclerView()
         view?.showWeatherData(response)
         temp = response.weatherList[0].main.temp.toString()
+        description = response.weatherList[0].weather[0].description
     }
 
     private fun handleError(throwable: Throwable) {
@@ -68,7 +70,7 @@ class MainFragmentPresenter @Inject internal constructor(private val dataReposit
 
     override fun saveToLocalStorage() {
         if (::name.isInitialized && ::temp.isInitialized) {
-            dataRepository.insertFavorite(Favorite(null, name, temp, utils.getCurrentTime()))
+            dataRepository.insertFavorite(Favorite(null, name, temp, description, utils.getCurrentTime()))
         }
     }
 }

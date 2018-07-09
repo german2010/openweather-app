@@ -18,4 +18,7 @@ interface AppDAO {
 
     @Query("SELECT name FROM favorites")
     fun getCityList(): Single<List<String>>
+
+    @Query("SELECT * FROM favorites WHERE name = :name")
+    fun getDetailedWeatherByCity(name: String) : Single<Favorite>
 }

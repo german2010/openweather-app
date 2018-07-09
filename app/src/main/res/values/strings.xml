@@ -9,4 +9,9 @@
     <string name="show_favorites">Show favorite cities</string>
     <string name="main_screen_title">Main screen</string>
     <string name="favorite_screen">Favorite screen</string>
+    <string name="description_details_title">Description</string>
+    <string name="temperature_details_title">Temperature:</string>
+    <string name="db_error">Some error with DB</string>
+    <string name="api_error">Some API error</string>
+    <string name="network_error">Some network error</string>
 </resources>

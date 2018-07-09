@@ -21,4 +21,8 @@ class LocalDataSource @Inject constructor(db: AppDB) {
     fun getCityList(): Single<List<String>> {
         return dao.getCityList()
     }
+
+    fun getDetailedWeatherByCity(name: String) : Single<Favorite> {
+        return dao.getDetailedWeatherByCity(name)
+    }
 }

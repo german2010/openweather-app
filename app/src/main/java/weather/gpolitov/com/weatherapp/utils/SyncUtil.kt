@@ -25,12 +25,14 @@ class SyncUtil @Inject internal constructor(private val dataRepository: DataRepo
                 }
                 .flatMap { t: WeatherResponse ->
                     val favorite = Favorite(null, t.city.name,
-                            t.weatherList[0].main.temp.toString(), utils.getCurrentTime())
+                            t.weatherList[0].main.temp.toString(),
+                            t.weatherList[0].weather[0].description,
+                            utils.getCurrentTime())
                     return@flatMap Observable.just(favorite)
                 }
                 .toList()
-                .repeatWhen { t -> t.delay(20, TimeUnit.SECONDS) }
-                .retryWhen { t -> t.delay(20, TimeUnit.SECONDS) }
+                .repeatWhen { t -> t.delay(1, TimeUnit.MINUTES) }
+                .retryWhen { t -> t.delay(1, TimeUnit.MINUTES) }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.io())
                 .subscribe(this::onSuccess, this::onError))
